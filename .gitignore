@@ -1,52 +1,99 @@
-# Prerequisites
-*.d
+#include <stdio.h>
+#define DIM 3
+void leer (float matriz [DIM][DIM]);
+void mostrar (float matriz [DIM][DIM]);
+int maxfila (float matriz [DIM][DIM], int fila);
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+void main(){
+	float matriz [DIM][DIM];
+	int res, fila;
 
-# Linker output
-*.ilk
-*.map
-*.exp
+	printf("\nIntrodueix els 9 numeros de la matriu.(D'esquerra a dreta/D'adalt a sota.)\n");
+	leer(matriz);
 
-# Precompiled Headers
-*.gch
-*.pch
+	printf("\nIntrodueix els numero de fila per trobar el maxima de la mateixa.\n");
+	scanf("%d", &fila);
+	getchar();
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+	res=maxfila(matriz,fila);
+	printf("\nEl maxim de la fila %d es:%d.\n",fila,res);
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+	printf("%d\n", fila);
+	mostrar(matriz);
+}
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+/*Funcion leer matriz*/
+
+void leer (float matriz [DIM][DIM]){
+	int i,j;
+	for (i = 0; i < DIM; i++)
+	{
+		for (j = 0; j < DIM; j++)
+		{
+				scanf("%f",&matriz[i][j]);
+		}
+	}
+}
+
+/*Funcion mostrar matriz*/
+
+void mostrar (float matriz [DIM][DIM]){
+	int i,j;
+	for (i = 0; i < DIM; i++)
+	{
+		for (j = 0; j < DIM; j++)
+		{
+			printf("%.f ",matriz[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+/*Funcion encontrar maximo de una fila en un 3x3*/
+
+int maxfila (float matriz [DIM][DIM], int fila){
+	int i,j,max;
+
+	if (fila==1)
+	{
+		j=0;
+		max=matriz[0][0];
+		/*for (int i = 0; i < 2; i++)
+		{
+			if (matriz[i][j]>max)
+			{
+				max=matriz[i][j];
+			}
+		}*/
+	}
+	else
+	{
+		if (fila==2)
+		{
+			max=matriz[1][0];
+			j=1;
+			/*for (int i = 0; i < 2; i++)
+			{
+				if (matriz[i][j]>max)
+				{
+				max=matriz[i][j];
+				}
+			}*/
+		}
+		else
+		{
+			max=matriz[2][0];
+			j=2;
+			/*for (int i = 0; i < 2; i++)
+			{
+				if (matriz[i][j]>max)
+				{
+				max=matriz[i][j];
+				}
+			}*/
+		}
+	}
+	return(max);
+}
