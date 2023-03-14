@@ -1,99 +1,135 @@
 #include <stdio.h>
-#define DIM 3
-void leer (float matriz [DIM][DIM]);
-void mostrar (float matriz [DIM][DIM]);
-int maxfila (float matriz [DIM][DIM], int fila);
+#define LONGM1 3
+#define LONGM2 4
+#define LONGV 20
+int maxfila(int matriu[LONGM1][LONGM1], int fila);
+void llegirvector (int vector[], int LONGU);
+void mostrarvector (int vector[], int LONGU);
+void sumavector (int vector[], int vectorsum[], int LONGU);
 
 void main(){
-	float matriz [DIM][DIM];
-	int res, fila;
+	int matriu[LONGM1][LONGM1], matriu2[LONGM2][LONGM2], res, fila, LONGU, vector[LONGV], vectorsum[LONGV], i, j, sum=0;
 
 	printf("\nIntrodueix els 9 numeros de la matriu.(D'esquerra a dreta/D'adalt a sota.)\n");
-	leer(matriz);
+	for (i = 0; i < LONGM1; i++)
+	{
+		for (j = 0; j < LONGM1; j++)
+		{
+				scanf("%d",&matriu[i][j]);
+		}
+	}
+
+	for (i = 0; i < LONGM1; i++)
+	{
+		for (j = 0; j < LONGM1; j++)
+		{
+			printf("%.d ",matriu[i][j]);
+		}
+		printf("\n");
+	}
 
 	printf("\nIntrodueix els numero de fila per trobar el maxima de la mateixa.\n");
 	scanf("%d", &fila);
 	getchar();
 
-	res=maxfila(matriz,fila);
+	res=maxfila(matriu,fila);
 	printf("\nEl maxim de la fila %d es:%d.\n",fila,res);
 
+	printf("\nIntrodueix la longuitud que tindrà el teu vector.\n");
+	scanf("%d", &LONGU);
+	getchar();
 
-	printf("%d\n", fila);
-	mostrar(matriz);
-}
+	printf("\nIntrodueix els nombres del vector\n"); 
+	llegirvector(vector, LONGU);
+	getchar();
 
+	sumavector(vector, vectorsum, LONGU);
 
-/*Funcion leer matriz*/
+	mostrarvector(vectorsum, LONGU);
 
-void leer (float matriz [DIM][DIM]){
-	int i,j;
-	for (i = 0; i < DIM; i++)
+	printf("\nIntrodueix els 16 numeros de la nova matriu.(D'esquerra a dreta/D'adalt a sota.)\n");
+
+	for (i = 0; i < LONGM2; i++)
 	{
-		for (j = 0; j < DIM; j++)
+		for (j = 0; j < LONGM2; j++)
 		{
-				scanf("%f",&matriz[i][j]);
+				scanf("%d",&matriu2[i][j]);
 		}
 	}
-}
-
-/*Funcion mostrar matriz*/
-
-void mostrar (float matriz [DIM][DIM]){
-	int i,j;
-	for (i = 0; i < DIM; i++)
+	for (i = 0; i < LONGM2; i++)
 	{
-		for (j = 0; j < DIM; j++)
+		for (j = 0; j < LONGM2; j++)
 		{
-			printf("%.f ",matriz[i][j]);
+			printf("%.d ",matriu2[i][j]);
 		}
 		printf("\n");
 	}
+	for (int i = 0; i < LONGM2; i++)
+	{
+		for (int j = 0; j < LONGM2; j++)
+		{
+			if (i==j)
+			{
+				sum=sum+matriu2[i][j];
+			}
+		}
+	}
+	printf("\nLa suma de la diagonal de la matriu es: %d\n",sum);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*Funcion encontrar maximo de una fila en un 3x3*/
 
-int maxfila (float matriz [DIM][DIM], int fila){
-	int i,j,max;
+int maxfila(int matriu[LONGM1][LONGM1], int fila){ 
+	int i,j,max=0; 
 
-	if (fila==1)
+	for(i=0; i < LONGM1; i++){ 
+		for(j=0; j < LONGM1; j++){ 
+			if(matriu[fila-1][j]>max){ max=matriu[fila-1][j];
+			} 
+		} 
+	} 
+	return(max); 
+}
+
+/*Funcion leer vectores*/
+
+void llegirvector (int vector[], int LONGU){
+	int i;
+	for (int i = 0; i < LONGU; i++)
 	{
-		j=0;
-		max=matriz[0][0];
-		/*for (int i = 0; i < 2; i++)
-		{
-			if (matriz[i][j]>max)
-			{
-				max=matriz[i][j];
-			}
-		}*/
+		scanf("%d",&vector[i]);
 	}
-	else
+}
+
+/*Funcion mostrar vectores*/
+
+void mostrarvector (int vector[], int LONGU){
+	int i;
+	for (int i = 0; i < LONGU; i++)
 	{
-		if (fila==2)
-		{
-			max=matriz[1][0];
-			j=1;
-			/*for (int i = 0; i < 2; i++)
-			{
-				if (matriz[i][j]>max)
-				{
-				max=matriz[i][j];
-				}
-			}*/
-		}
-		else
-		{
-			max=matriz[2][0];
-			j=2;
-			/*for (int i = 0; i < 2; i++)
-			{
-				if (matriz[i][j]>max)
-				{
-				max=matriz[i][j];
-				}
-			}*/
-		}
+		printf(" %d ",vector[i]);
 	}
-	return(max);
+}
+
+/*Funcion sumar el numero anterior en el vector de longitud LONGV*/
+
+void sumavector (int vector[], int vectorsum[], int LONGU){
+	int i;
+	vectorsum[0]=vector[0];
+	for (int i = 1; i < LONGU; i++)
+	{
+		vectorsum[i]=vectorsum[i-1]+vector[i];
+	}
 }
